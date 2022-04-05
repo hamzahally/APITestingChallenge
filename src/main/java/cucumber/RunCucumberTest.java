@@ -6,6 +6,6 @@ import org.junit.runner.RunWith;
 
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = {"src/main/resources"}, glue = {"stepdefs"})
+@CucumberOptions(features = {"src/main/resources"}, glue = {"stepdefs"}, publish = true)
 public class RunCucumberTest {
 }
