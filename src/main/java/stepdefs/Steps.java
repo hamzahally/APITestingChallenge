@@ -4,11 +4,9 @@ import static org.assertj.core.api.Assertions.*;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
-import io.cucumber.spring.CucumberContextConfiguration;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-@CucumberContextConfiguration
 public class Steps {
 
     public String setGetEndpoint(String instrumentName, String timeFrame){
