@@ -1,4 +1,4 @@
-Feature: API Testing for Crypto.com
+Feature: Checking CandleStick GET Endpoint for Crypto.com
 
   Scenario Outline: Check CandleStick Data for Multiple Instrument Types
     Given the service is available
