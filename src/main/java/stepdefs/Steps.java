@@ -29,19 +29,18 @@ public class Steps {
         assertThat(response.getStatusCode()).isEqualTo(200);
     }
 
-    @Given("^no instrument of timeframe is set$")
+    @When("^no instrument or timeframe is set$")
     public void noInstrumentOrTimeframeSet() {
-        RestAssured.get("https://uat-api.3ona.co/v2/public/get-candlestick?");
+        RestAssured.get("https://uat-api.3ona.co/v2/public/get-candlestick");
     }
 
     @When("^the instrument is set to ([^\"]*)$")
     public void setInstrumentName(String instrumentName) {
-        testContext.setInstrument(instrumentName);
-    }
-
-    @When("^the instrument is set to empty$")
-    public void setInstrumentNameToEmpty() {
-        testContext.setInstrument("");
+        if(instrumentName.equals("empty")){
+            testContext.setInstrument("");
+        } else {
+            testContext.setInstrument(instrumentName);
+        }
     }
 
     @When("^timeframe is ([^\"]*)$")
@@ -78,15 +77,22 @@ public class Steps {
 
     }
 
-    @Then("^response has error message ([^\"]*)$")
-    public void errorMessageResponse(String message) {
-        assertThat(testContext.getResponse().getBody().path("error").toString()).isEqualTo(message);
+    @Then("^response has error ([^\"]*)$")
+    public void errorReponse(String error) {
+        assertThat(testContext.getResponse().getBody().path("error").toString()).isEqualTo(error);
 
     }
 
-    @Then("^message is Invalid Input$")
+    @Then("^response message is ([^\"]*)$")
+    public void invalidInputResponse(String message) {
+        assertThat(testContext.getResponse().getBody().path("message").toString()).isEqualTo(message);
+
+    }
+
+    @Then("^the response should contain the correct data tags")
     public void invalidInputResponse() {
-        assertThat(testContext.getResponse().getBody().path("message").toString()).isEqualTo("Invalid input");
+        String[] dataTags = {"t","o","h","l","c","v"};
+        assertThat(testContext.getResponse().getBody().path("result.data[0]").toString()).contains(dataTags);
 
     }
 

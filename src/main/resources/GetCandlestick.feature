@@ -53,21 +53,25 @@ Feature: API Testing for Crypto.com
     Then the response should return a 200 response
     Then the data should be null
 
-#  Scenario: Bad Response when instrument name is missing
-#    Given the service is available
-#    And the instrument is set to empty
-#    And timeframe is 1m
-#    When the request is sent
-#    Then the response should return a 200 response
-#    Then message is Invalid Input
-#
-#  Scenario: Bad Request when no instrument or time frame is supplied
-#    Given the service is available
-#    And no instrument of timeframe is set
-#    When the request is sent
-#    Then the response should return a 400 response
-#    Then response has error message Bad Request
+  Scenario: Invalid Input Response when instrument name is missing
+    Given the service is available
+    And the instrument is set to empty
+    And timeframe is 1m
+    When the request is sent
+    Then the response should return a 200 response
+    Then response message is Invalid input
 
+  Scenario: Bad Response when timeframe is missing
+    Given the service is available
+    And the instrument is set to BTC_USDT
+    When the request is sent
+    Then the response should return a 200 response
+    Then response message is Timeframe null is not supported.
 
-    #TODO: implement more scenario for candlestick endpoint
-    #TODO: implement more scenario for checking headers
+  Scenario: Correct data tags are in the response
+    Given the service is available
+    And the instrument is set to BTC_USDT
+    And timeframe is 1m
+    When the request is sent
+    Then the response should return a 200 response
+    And the response should contain the correct data tags
